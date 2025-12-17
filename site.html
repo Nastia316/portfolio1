@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Программист-дизайнер | Портфолио</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="style.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .indicator-dot.active {
+            width: 40px;
+            height: 40px;
+            opacity: 1;
+        }
+
+        /* Header shape custom clip-path */
+        .header-shape {
+            z-index: 4;
+            clip-path: polygon(
+                0 0,
+                100% 0,
+                100% 80%,
+                95% 75%,
+                90% 70%,
+                85% 66%,
+                80% 63%,
+                75% 60%,
+                70% 58%,
+                65% 56%,
+                60% 55%,
+                55% 54%,
+                50% 53%,
+                45% 54%,
+                40% 55%,
+                35% 56%,
+                30% 58%,
+                25% 60%,
+                20% 63%,
+                15% 66%,
+                10% 70%,
+                5% 75%,
+                0 80%
+            );
+        }
+
+        .header-shape-green {
+            z-index: 3;
+            clip-path: polygon(
+                0 0,
+                100% 0,
+                100% 100%,
+                95% 91%,
+                90% 83%,
+                85% 76%,
+                80% 70%,
+                75% 65%,
+                70% 61%,
+                65% 58%,
+                60% 56%,
+                55% 54%,
+                50% 53%,
+                45% 54%,
+                40% 56%,
+                35% 58%,
+                30% 61%,
+                25% 65%,
+                20% 70%,
+                15% 76%,
+                10% 83%,
+                5% 91%,
+                0 100%
+            );
+        }
+
+        /* Header shape circles */
+        .header-shape::before {
+            content: '';
+            position: absolute;
+            top: -75px;
+            left: -75px;
+            width: 150px;
+            height: 150px;
+            background: #1B1D34;
+            border-radius: 50%;
+        }
+
+        .header-shape::after {
+            content: '';
+            position: absolute;
+            top: -75px;
+            right: -75px;
+            width: 150px;
+            height: 150px;
+            background: #1B1D34;
+            border-radius: 50%;
+        }
+        .corner-decoration {
+            z-index: 1002;
+        }
+        .header-content {
+            z-index: 1002;
+        }
+        
+        /* Медиа-запросы для скрытия header на мобильных устройствах */
+        @media (max-width: 768px) {
+            header {
+                display: none !important;
+            }
+            
+            /* На мобильных показываем по 1 слайду */
+            .slide {
+                min-width: 100% !important;
+            }
+        }
+        
+        /* На планшетах и десктопах показываем по 3 слайда */
+        @media (min-width: 769px) {
+            .slide {
+                min-width: 33.333% !important;
+            }
+        }
+        
+        /* Класс для скрытия header */
+        .header-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+        }
+        
+        .header-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        /* Modal animations */
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal.active .modal-content {
+            animation: zoomIn 0.3s ease;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Стили для кнопки наверх */
+        #backToTop {
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body class="bg-[#1b1d34] text-white overflow-x-hidden">
+    <!-- Header - ВСЕ элементы header с высоким z-index -->
+    <header id="mainHeader" class="fixed top-0 left-0 w-full z-50 header-visible">
+        <!-- Угловые декоративные элементы - самые верхние -->
+        <div class="corner-decoration absolute top-1 left-1 w-10 h-10">
+            <img src="topcorner.png" alt="" class="w-full h-full object-contain">
+        </div>
+        <div class="corner-decoration absolute top-1 right-1 w-10 h-10 scale-x-[-1]">
+            <img src="topcorner.png" alt="" class="w-full h-full object-contain">
+        </div>
+
+        <!-- Зеленая форма шапки -->
+        <div class="header-shape-green absolute w-full h-32 bg-emerald-200 backdrop-blur"></div>
+        
+        <!-- Основная форма шапки -->
+        <div class="header-shape absolute w-full h-32 bg-gradient-to-b from-[#A196D3] to-[#6A6491] backdrop-blur"></div>
+        
+        <!-- Навигация - самый верхний слой -->
+        <div class="header-content absolute top-0 left-0 right-0 py-6">
+            <nav class="mx-auto px-4">
+                <ul class="flex justify-center space-x-8 text-sm uppercase tracking-wider font-semibold">
+                    <li><a href="#hero" class="text-[#1B1D34] hover:text-emerald-200 hover:-translate-y-0.5 transition-all duration-300">Главная</a></li>
+                    <li><a href="#skills" class="text-[#1B1D34] hover:text-emerald-200 hover:-translate-y-0.5 transition-all duration-300">Навыки</a></li>
+                    <li><a href="#portfolio" class="text-[#1B1D34] hover:text-emerald-200 hover:-translate-y-0.5 transition-all duration-300">Примеры работ</a></li>
+                    <li><a href="#contact" class="text-[#1B1D34] hover:text-emerald-200 hover:-translate-y-0.5 transition-all duration-300">Форма связи</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Parallax -->
+    <section id="hero" class="h-screen relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-[120%] bg-[url('photo.png')] bg-cover bg-center transform-gpu will-change-transform z-0" id="parallaxBg"></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-[#1B1D34] z-1"></div>
+        <div class="relative h-full z-2 flex flex-col justify-center items-center">
+            <h1 class="text-6xl md:text-7xl font-bold text-center mb-4 font-playfair drop-shadow-[2px_2px_20px_rgba(0,0,0,0.5)]">
+                Программист<br>-дизайнер
+            </h1>
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer hover:scale-125 hover:opacity-80 transition-all duration-300 z-3" onclick="scrollToSkills()">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                    <path d="M7 10l5 5 5-5z"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 relative">
+        <!-- Added decorative side images -->
+        <img src="sides.png" alt="" class="absolute left-0 top-0 h-full w-auto pointer-events-none hidden lg:block scale-x-[-1] z-0">
+        <img src="sides.png" alt="" class="absolute right-0 top-0 h-full w-auto pointer-events-none hidden lg:block z-0">
+        
+        <div class="mx-auto max-w-6xl relative z-10">
+            <h2 class="text-5xl font-bold text-center mb-16 font-playfair">Навыки</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Дизайнер-программист</h3>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        С навыками в Figma, Photoshop, Adobe, Maxon Cinema 4D, а также программирования на языках Python, C#, HTML и JavaScript.
+                    </p>
+                    
+                    <div class="grid grid-cols-4 gap-4 mb-8">
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <span class="text-2xl font-bold">Ai</span>
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <span class="text-2xl font-bold">An</span>
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <img src="figma.png" alt="Figma" class="w-10 h-10 object-contain">
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <span class="text-2xl font-bold">C#</span>
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <span class="text-xl font-bold">JS</span>
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <span class="text-xl font-bold">HTML</span>
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <span class="text-xl font-bold">SQL</span>
+                        </div>
+                        <div class="bg-[rgba(139,119,217,0.2)] border-2 border-[rgba(139,119,217,0.5)] p-5 rounded-xl hover:bg-[rgba(139,119,217,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                            <img src="python.png" alt="Python" class="w-10 h-10 object-contain">
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Что я могу</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Могу разработать дизайн сайта или проекта, персонажа, а также могу помочь адаптировать, написать код для сайта или несложной игры. Предлагаю современные и необычные идеи.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Added decorative arc between sections -->
+    <div class="w-full overflow-hidden relative z-10">
+        <img src="дуга.png" alt="" class="w-full h-auto pt-12">
+    </div>
+
+    <!-- Portfolio Section with Slider -->
+    <section id="portfolio" class="py-20 px-4 relative">
+        <div class="mx-auto relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 font-playfair">Примеры работ</h2>
+            
+            <!-- Moved slider buttons above slider on the right -->
+            <div class="flex justify-end gap-3 mb-6 pr-4">
+                <button class="w-12 h-12 text-white rounded-full hover:text-emerald-200 transition-all duration-300 flex items-center justify-center text-7xl z-20" onclick="moveSlide(-1)">‹</button>
+                <button class="w-12 h-12 text-white rounded-full hover:text-emerald-200 transition-all duration-300 flex items-center justify-center text-7xl z-20" onclick="moveSlide(1)">›</button>
+            </div>
+
+            <div class="relative max-w-6xl mx-auto overflow-hidden z-10">
+                <div class="flex transition-transform duration-500 ease-in-out z-10" id="sliderWrapper">
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide1.png" alt="Дизайн мерча студенческого отряда" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide2.png" alt="Постеры" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide3.png" alt="Шрифтовая композиция" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide4.png" alt="Работы по композиции" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide5.png" alt="Логотипы" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide6.png" alt="Векторный натюрморт в трех цветах" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide7.png" alt="Песенник студенческого отряда" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide8.png" alt="Ива - логотипы" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                    <div class="slide flex justify-center items-center p-5 cursor-pointer hover:scale-105 transition-transform duration-300 z-10" onclick="openModal(this)">
+                        <img src="slide9.png" alt="Постер с цитатой" class="max-w-full h-96 object-contain rounded-xl">
+                    </div>
+                </div>
+            </div>
+                                                                                                                                           
+            <!-- Added slider indicators with 9 dots -->
+            <div class="flex justify-center gap-3 mt-10 z-10" id="sliderIndicators">
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(0)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(1)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(2)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(3)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(4)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(5)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+                <div class="indicator-dot w-8 h-8 cursor-pointer transition-all duration-300 opacity-40 brightness-70 hover:opacity-70 hover:brightness-100 z-10" onclick="goToSlide(6)">
+                    <img src="star.png" alt="Star" class="w-full h-full object-contain">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for enlarged images - самый высокий z-index, кроме header -->
+    <div id="imageModal" class="modal fixed hidden z-40 left-0 top-0 w-full h-full bg-black/95 justify-center items-center" onclick="closeModal()">
+        <span class="modal-close absolute top-8 right-10 text-white text-5xl font-bold cursor-pointer hover:text-emerald-200 hover:rotate-90 transition-all duration-300 z-41">&times;</span>
+        <img class="modal-content max-w-[90%] max-h-[90%] object-contain z-41" id="modalImage">
+    </div>
+
+    <!-- Contact Section with Arch -->
+    <section id="contact" class="py-20 px-4 min-h-screen flex items-center relative z-10">
+        <div class="mx-auto relative z-10">
+            <!-- Split layout into two columns: heading and info left, arch+form right -->
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <!-- Left side: Heading and Contact info -->
+                <div class="contact-info">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 font-playfair">Остались вопросы?<br>Хотите воспользоваться<br>моими услугами?</h2>
+                    
+                    <p class="text-lg mb-8 text-gray-300">Напишите мне или оставьте свои данные в форме</p>
+                    
+                    <div class="space-y-4 text-lg">
+                        <p class="flex items-center gap-3">
+                            <span>✉️</span>
+                            <a href="mailto:catswarrior5@mail.ru" class="hover:text-emerald-200 transition-colors duration-300">catswarrior5@mail.ru</a>
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <span>📞</span>
+                            <a href="tel:+79217811988" class="hover:text-emerald-200 transition-colors duration-300">+7-922-178-19-88</a>
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <span>✈️</span>
+                            <a href="https://t.me/Rittersportl" class="hover:text-emerald-200 transition-colors duration-300">Telegram</a>
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <span>📱</span>
+                            <a href="https://vk.com/awararae" class="hover:text-emerald-200 transition-colors duration-300">ВКонтакте</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right side: Arch with form -->
+                <div class="relative w-full max-w-md mx-auto">
+                    <!-- Made arch smaller and properly positioned -->
+                    <img src="arch.png" alt="Arch" class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-auto opacity-95 pointer-events-none max-h-[700px] z-0">
+                    
+                    <div class="relative z-10 pt-48 px-10">
+                        <form id="contactForm" class="space-y-3">
+                            <div>
+                                <input type="text" name="name" placeholder="Ваше имя" required class="bg-white/90 border-2 border-[rgba(139,119,217,0.3)] rounded-lg p-2 w-full mb-4 focus:outline-none focus:border-[#8b77d9] focus:shadow-[0_0_20px_rgba(139,119,217,0.3)] transition-all duration-300 text-[#1a0f3d]">
+                            </div>
+                            <div>
+                                <input type="email" name="email" placeholder="Почта" required class="bg-white/90 border-2 border-[rgba(139,119,217,0.3)] rounded-lg p-2 w-full mb-4 focus:outline-none focus:border-[#8b77d9] focus:shadow-[0_0_20px_rgba(139,119,217,0.3)] transition-all duration-300 text-[#1a0f3d]">
+                            </div>
+                            <div>
+                                <input type="tel" name="phone" placeholder="Номер телефона" class="bg-white/90 border-2 border-[rgba(139,119,217,0.3)] rounded-lg p-2 w-full mb-4 focus:outline-none focus:border-[#8b77d9] focus:shadow-[0_0_20px_rgba(139,119,217,0.3)] transition-all duration-300 text-[#1a0f3d]">
+                            </div>
+                            <div>
+                                <textarea name="message" rows="4" placeholder="Сообщение" required class="bg-white/90 border-2 border-[rgba(139,119,217,0.3)] rounded-lg p-1 w-full mb-4 focus:outline-none focus:border-[#8b77d9] focus:shadow-[0_0_20px_rgba(139,119,217,0.3)] transition-all duration-300 text-[#1a0f3d]"></textarea>
+                            </div>
+                            <button type="submit" class="bg-gradient-to-br from-[#8b77d9] to-[#6b5bb8] text-white border-none p-4 rounded-lg font-semibold cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(139,119,217,0.4)] transition-all duration-300 w-full">
+                                Отправить
+                            </button>
+                            <div id="formMessage" class="hidden text-center text-sm p-3 rounded-lg"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative bg-emerald-200 p-10 overflow-hidden z-10">
+        <img src="down.png" alt="" class="absolute bottom-0 left-0 w-40 h-40 z-10">
+        <img src="down.png" alt="" class="absolute bottom-0 right-0 w-40 h-40 z-10 scale-x-[-1]">
+        
+        <div class="container mx-auto text-center relative z-20">
+            <p class="text-sm text-gray-700">Все права защищены © 2025</p>
+        </div>
+    </footer>
+
+    <!-- Fixed back to top button -->
+    <div class="back-to-top fixed bottom-10 right-10 bg-[#A196D3] text-white w-12 h-12 rounded-full flex justify-center items-center cursor-pointer opacity-0 invisible hover:bg-[#8b77d9] hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(161,150,211,0.6)] transition-all duration-300 z-999 shadow-[0_4px_15px_rgba(161,150,211,0.4)]" id="backToTop" onclick="scrollToTop()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 14l5-5 5 5z"/>
+        </svg>
+    </div>
+
+    <script>
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxBg = document.getElementById('parallaxBg');
+            if (parallaxBg) {
+                parallaxBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Smooth scroll to skills section
+        function scrollToSkills() {
+            document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Slider functionality - ВЕРНУЛИ К ИСХОДНОЙ ВЕРСИИ
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Определяем количество видимых слайдов в зависимости от устройства
+        function getSlidesPerView() {
+            if (window.innerWidth <= 768) {
+                return 1; // Мобильные: 1 слайд
+            } else {
+                return 3; // Компьютеры: 3 слайда (но прокручивается по 1)
+            }
+        }
+        
+        // Смещение при прокрутке - ВСЕГДА 1 СЛАЙД
+        function getSlideStep() {
+            return 1; // Всегда прокручиваем по 1 слайду
+        }
+
+        function moveSlide(direction) {
+            const slideStep = getSlideStep();
+            currentSlide += direction * slideStep;
+            
+            const slidesPerView = getSlidesPerView();
+            
+            // Ограничиваем текущий слайд
+            if (currentSlide < 0) {
+                currentSlide = totalSlides - slidesPerView;
+            } else if (currentSlide > totalSlides - slidesPerView) {
+                currentSlide = 0;
+            }
+            
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            const slidesPerView = getSlidesPerView();
+            currentSlide = index;
+            
+            // Если индекс указывает на слайд, который не помещается, корректируем
+            if (currentSlide > totalSlides - slidesPerView) {
+                currentSlide = totalSlides - slidesPerView;
+            }
+            
+            updateSlider();
+        }
+
+        function updateSlider() {
+            const slider = document.getElementById('sliderWrapper');
+            const slidesPerView = getSlidesPerView();
+            const slideWidth = 100 / slidesPerView;
+            const offset = -(currentSlide * slideWidth);
+            slider.style.transform = `translateX(${offset}%)`;
+            
+            updateIndicators();
+        }
+
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.indicator-dot');
+            indicators.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Инициализация слайдера
+        updateSlider();
+        updateIndicators();
+
+        // Функции для управления header
+        function hideHeader() {
+            const header = document.getElementById('mainHeader');
+            if (header) {
+                header.classList.remove('header-visible');
+                header.classList.add('header-hidden');
+            }
+        }
+
+        function showHeader() {
+            const header = document.getElementById('mainHeader');
+            if (header) {
+                header.classList.remove('header-hidden');
+                header.classList.add('header-visible');
+            }
+        }
+
+        // Проверка ширины экрана для скрытия header на узких экранах
+        function checkScreenWidth() {
+            const header = document.getElementById('mainHeader');
+            if (window.innerWidth <= 768) {
+                // На мобильных устройствах header всегда скрыт
+                hideHeader();
+            } else {
+                // На десктопе показываем header, если не открыто модальное окно
+                const modal = document.getElementById('imageModal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    hideHeader();
+                } else {
+                    showHeader();
+                }
+            }
+        }
+
+        // Modal functionality
+        function openModal(slideElement) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const img = slideElement.querySelector('img');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex', 'active');
+            modalImg.src = img.src;
+            
+            // Скрываем header при открытии модального окна
+            hideHeader();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex', 'active');
+            
+            // Показываем header при закрытии модального окна, если не мобильная версия
+            if (window.innerWidth > 768) {
+                showHeader();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Функция для кнопки "Наверх" - исправленная версия
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Показ/скрытие кнопки "Наверх"
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('invisible', 'opacity-0');
+                backToTop.classList.add('visible', 'opacity-100');
+            } else {
+                backToTop.classList.remove('visible', 'opacity-100');
+                backToTop.classList.add('invisible', 'opacity-0');
+            }
+        });
+
+        // Проверка ширины экрана при загрузке и изменении размера
+        window.addEventListener('load', function() {
+            checkScreenWidth();
+            updateSlider(); // Обновляем слайдер при загрузке
+        });
+        
+        window.addEventListener('resize', function() {
+            checkScreenWidth();
+            updateSlider(); // Обновляем слайдер при изменении размера
+        });
+
+        // Обновляем слайдер при изменении ориентации устройства
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                updateSlider();
+            }, 100);
+        });
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const formMessage = document.getElementById('formMessage');
+            
+            // Показываем загрузку
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+            
+            // Формируем данные для отправки на почту
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const message = formData.get('message');
+            
+            const mailtoLink = `mailto:catswarriors0@mail.ru?subject=Новое сообщение с сайта портфолио&body=Имя: ${encodeURIComponent(name)}%0D%0AПочта: ${encodeURIComponent(email)}%0D%0AТелефон: ${encodeURIComponent(phone || 'не указан')}%0D%0AСообщение: ${encodeURIComponent(message)}`;
+            
+            // Открываем почтовый клиент
+            window.location.href = mailtoLink;
+            
+            // Показываем сообщение об успехе
+            formMessage.textContent = 'Сообщение отправлено! Откроется почтовый клиент.';
+            formMessage.className = 'text-center text-sm p-3 rounded-lg bg-green-100 text-green-800';
+            formMessage.classList.remove('hidden');
+            
+            // Восстанавливаем кнопку
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                form.reset();
+            }, 3000);
+            
+            // Скрываем сообщение через 5 секунд
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
